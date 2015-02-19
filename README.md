@@ -1,5 +1,4 @@
-# DatabaseDemo
-*in class exercise   
+# DatabaseDemo (in class exercise)   
 
 How to Create your own branch from Master
 ===================================
