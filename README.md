@@ -2,7 +2,7 @@
 
 How to Create your own branch from Master
 ===================================
-*Inside the Repository page on Github [Click Here]https://github.com/lrabor/DatabaseDemo)*  
+*Inside the Repository page on Github [Click Here](https://github.com/lrabor/DatabaseDemo)*  
 - Click on "Branch: Master" drop down
 - Enter a name for your new branch and submit (use your name for simplicity)
 - You should be redirected to your new branch with a message on top "Branch Created"
