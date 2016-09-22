@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2016. All Rights Reserved.
+ */
+
 package com.rabor.databasedemo;
 
 import android.database.sqlite.SQLiteDatabase;
@@ -6,16 +10,19 @@ import android.database.Cursor;
 import android.content.Context;
 import android.content.ContentValues;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MyDBHandler extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 3;
     private static final String DATABASE_NAME = "products.db";
     public static final String TABLE_PRODUCTS = "products";
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_PRODUCTNAME = "productname";
 
-    public MyDBHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, DATABASE_NAME, factory, DATABASE_VERSION);
+    public MyDBHandler(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
@@ -48,13 +55,12 @@ public class MyDBHandler extends SQLiteOpenHelper {
     public void deleteProduct (String productName) {
 
         SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("DELETE FROM " + TABLE_PRODUCTS + " WHERE " + COLUMN_PRODUCTNAME + "=\'" + productName + "\';");
+        db.execSQL("DELETE FROM " + TABLE_PRODUCTS + " WHERE " + COLUMN_PRODUCTNAME + "=\"" + productName + "\";");
     }
 
     // print out the database as a string
-    public String databaseToString() {
-
-        String dbString = "";
+    public List<Products> databaseToString() {
+        List<Products> products = new ArrayList<Products>();
         SQLiteDatabase db = getWritableDatabase();
         String query = "SELECT * FROM " + TABLE_PRODUCTS + " WHERE 1";
 
@@ -64,12 +70,21 @@ public class MyDBHandler extends SQLiteOpenHelper {
         c.moveToFirst();
 
         while(!c.isAfterLast()) {
-            if(c.getString(c.getColumnIndex("productname")) != null) {
-                dbString += c.getString(c.getColumnIndex("productname"));
-                dbString += "\n";
-            }
+            Products product = cursorToProduct(c);
+            products.add(product);
+            c.moveToNext();
         }
+
         db.close();
-        return dbString;
+        //return dbString;
+        return products;
+     }
+
+    private Products cursorToProduct(Cursor c) {
+        Products product = new Products();
+        product.set_id(c.getInt(0));
+        product.set_productname(c.getString(1));
+        return product;
     }
+
 }

@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2016. All Rights Reserved.
+ */
+
 package com.rabor.databasedemo;
 
 import android.app.Application;
